@@ -96,7 +96,7 @@ const coordinateObj = keyValuePairs.reduce((acc, [key, value]) => {
     const shippingCharges = this.calculateShippingCharges(distanceKm);
 
 
-    return shippingCharges * 100 ? shippingCharges * 100 : 100*100 ; // Assuming you want to return the total in cents
+    return shippingCharges  ? shippingCharges  : 100*100 ; // Assuming you want to return the total in cents
 };
 
   createReturn() {
