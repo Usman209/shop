@@ -79,10 +79,10 @@ toRadians = (degrees) => {
     order:Order
   ): Promise<number> {
     console.log('value is ===============', cart.shipping_address.address_2);
-    const coordinateStr= cart.shipping_address.address_2;
+    const coordinateStr= cart?.shipping_address?.address_2;
 
 
-    const keyValuePairs = coordinateStr.split(', ').map(pair => pair.split(':')); 
+  const keyValuePairs = coordinateStr.split(', ').map(pair => pair.split(':')); 
 
 // Convert array of pairs into an object
 const coordinateObj = keyValuePairs.reduce((acc, [key, value]) => {
@@ -96,7 +96,7 @@ const coordinateObj = keyValuePairs.reduce((acc, [key, value]) => {
     const shippingCharges = this.calculateShippingCharges(distanceKm);
 
 
-    return shippingCharges * 100 ? shippingCharges * 100 : 30*100 ; // Assuming you want to return the total in cents
+    return shippingCharges * 100 ? shippingCharges * 100 : 100*100 ; // Assuming you want to return the total in cents
 };
 
   createReturn() {
