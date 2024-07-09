@@ -92,4 +92,5 @@ module.exports = {
   projectConfig,
   plugins,
   modules,
+
 };
