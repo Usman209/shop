@@ -1,0 +1,37 @@
+const Scrypt = require('scrypt-kdf');
+
+async function encodeAndDecode() {
+    try {
+        // Generate key using scrypt-kdf
+        const keyBuf = await Scrypt.kdf('welcome', { logN: 15 });
+
+        // Encode key buffer to base64 string
+        const keyStr = keyBuf.toString('base64');
+
+        console.log('Encoded Base64 Key:', keyStr);
+
+        // Decode base64 string back to Buffer
+        const decodedKeyBuf = Buffer.from('c2NyeXB0AAEAAAABAAAAARaCpA/y8BZx8Q7STbQppCkaj46ygeFLuZDvi39N3mIAydQp9XX2bxvNC/6rPGc+xH4oFsWUAS2MYkgQFrBBrgRVkHDCOuOMz27tWigleEr4', 'base64');
+
+
+       const ok = await Scrypt.verify(decodedKeyBuf, '123456');
+
+
+       console.log(ok);
+
+        // Convert Buffer back to string
+        const originalKey = decodedKeyBuf.toString('utf8');
+
+        return originalKey;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // Rethrow the error for handling elsewhere if needed
+    }
+}
+
+// Call the function and handle the returned promise
+encodeAndDecode().then(originalKey => {
+    console.log('Decoded Original Key:', originalKey);
+}).catch(err => {
+    console.error('Error in encoding and decoding:', err);
+});
