@@ -68,22 +68,25 @@ async function findPaymentByOrderId(manager: EntityManager, id: string) {
   }
 }
 
+
 async function updatePaymentByEmailAndAmount(manager: EntityManager, email: string, amount: number) {
-    try {
-      const userQuery = `
-        UPDATE public.gift_card
-        SET 
-          balance = balance + ($1 * 0.05)
-        WHERE metadata->>'email' = $2
-        RETURNING *
-      `;
-      const result = await manager.query(userQuery, [amount, email]);
-      return result.length > 0 ? result[0] : null;
-    } catch (error) {
-      console.error('Error updating payment by email and amount:', error);
-      throw error;
-    }
-  }
+  try {
+    const userQuery = `
+      UPDATE public.gift_card
+      SET 
+        balance = balance + ($1 * 0.05),
+        is_disabled = true
+      WHERE metadata->>'email' = $2
+      RETURNING *
+    `;
+    const result = await manager.query(userQuery, [amount, email]);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error('Error updating payment by email and amount:', error);
+    throw error;
+  }  
+}
+
 
 export const config: SubscriberConfig = {
   event: "order.shipment_created",
