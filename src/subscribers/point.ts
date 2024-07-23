@@ -75,7 +75,7 @@ async function updatePaymentByEmailAndAmount(manager: EntityManager, email: stri
       UPDATE public.gift_card
       SET 
         balance = balance + ($1 * 0.05),
-        is_disabled = true
+        is_disabled = false
       WHERE metadata->>'email' = $2
       RETURNING *
     `;
