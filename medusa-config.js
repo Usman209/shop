@@ -40,7 +40,7 @@ const plugins = [
     resolve: `@medusajs/file-local`,
     options: {
       upload_dir: "uploads",
-      backend_url: 'http://89.116.167.71:9000'
+      backend_url: process.env.FILE_URL || "http://localhost:9000"
 
     },
   },
@@ -53,6 +53,16 @@ const plugins = [
         open: process.env.OPEN_BROWSER !== "false",
       },
     },
+  },
+  {
+    resolve: `medusa-plugin-categories`,
+    options: {
+      enableUI: true,
+    },
+    
+  },
+  {
+    resolve: `@lambdacurry/medusa-plugin-product-reviews`,
   },
 ];
 

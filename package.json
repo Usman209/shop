@@ -25,6 +25,7 @@
     "dev": "cross-env npm run build:server && medusa develop"
   },
   "dependencies": {
+    "@lambdacurry/medusa-plugin-product-reviews": "^0.0.23",
     "@medusajs/admin": "^7.1.14",
     "@medusajs/cache-inmemory": "latest",
     "@medusajs/cache-redis": "^1.9.1",
@@ -41,6 +42,7 @@
     "medusa-interfaces": "latest",
     "medusa-payment-manual": "latest",
     "medusa-payment-stripe": "latest",
+    "medusa-plugin-categories": "^1.0.6",
     "prism-react-renderer": "^2.0.4",
     "scrypt-kdf": "^2.0.1",
     "sib-api-v3-sdk": "^8.5.0",
