@@ -1,0 +1,224 @@
+#########################################################to del order :
+
+
+BEGIN;
+
+-- 1. Update related records in `payment` to set `cart_id` to NULL
+UPDATE payment
+SET cart_id = NULL
+WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03';
+
+-- 2. Update related records in `order` to set `cart_id` to NULL
+UPDATE "order"
+SET cart_id = NULL
+WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03';
+
+-- 3. Delete related records from `payment_collection_payments`
+DELETE FROM payment_collection_payments
+WHERE payment_id IN (
+    SELECT id
+    FROM payment
+    WHERE order_id IN (
+        SELECT id
+        FROM "order"
+        WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+    )
+);
+
+-- 4. Delete related records from `refund`
+DELETE FROM refund
+WHERE payment_id IN (
+    SELECT id
+    FROM payment
+    WHERE order_id IN (
+        SELECT id
+        FROM "order"
+        WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+    )
+);
+
+-- 5. Delete related records from `payment_session`
+DELETE FROM payment_session
+WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03';
+
+-- 6. Update or delete related records in `line_item` to remove `cart_id` references
+-- Option A: Set `cart_id` to NULL if allowed
+UPDATE line_item
+SET cart_id = NULL
+WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03';
+
+-- Option B: Alternatively, if you prefer to delete `line_item` records instead
+-- DELETE FROM line_item
+-- WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03';
+
+-- 7. Delete related records from `cart`
+DELETE FROM cart
+WHERE id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03';
+
+-- 8. Delete related records from `payment`
+DELETE FROM payment
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+-- 9. Continue with other dependent tables
+DELETE FROM fulfillment
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM shipping_method
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM "return"
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM swap
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM line_item
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM gift_card_transaction
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM refund
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM order_discounts
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM claim_order
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM draft_order
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM gift_card
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+DELETE FROM order_edit
+WHERE order_id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+-- 10. Finally, delete the order itself
+DELETE FROM "order"
+WHERE id IN (
+    SELECT id
+    FROM "order"
+    WHERE cart_id = 'cart_01HZKJGHHNK4FPHR3V09D6ZC03'
+);
+
+COMMIT;
+
+
+
+
+###########################################  to del customer :
+
+
+
+
+-- Delete related records from `shipping_method`
+DELETE FROM shipping_method
+WHERE cart_id IN (
+    SELECT id
+    FROM cart
+    WHERE customer_id IN (
+        SELECT id
+        FROM customer
+        WHERE email = 'user1@yahoo.com'
+    )
+);
+
+-- Delete records from `cart`
+DELETE FROM cart
+WHERE customer_id IN (
+    SELECT id
+    FROM customer
+    WHERE email = 'user1@yahoo.com'
+);
+
+-- Delete records from `order` (Note the use of double quotes around `order`)
+DELETE FROM "order"
+WHERE customer_id IN (
+    SELECT id
+    FROM customer
+    WHERE email = 'user1@yahoo.com'
+);
+
+-- Delete records from `address`
+DELETE FROM address
+WHERE customer_id IN (
+    SELECT id
+    FROM customer
+    WHERE email = 'user1@yahoo.com'
+);
+
+-- Delete records from `notification`
+DELETE FROM notification
+WHERE customer_id IN (
+    SELECT id
+    FROM customer
+    WHERE email = 'user1@yahoo.com'
+);
+
+-- Delete records from `customer_group_customers`
+DELETE FROM customer_group_customers
+WHERE customer_id IN (
+    SELECT id
+    FROM customer
+    WHERE email = 'user1@yahoo.com'
+);
+
+-- Finally, delete the customer record
+DELETE FROM customer
+WHERE email = 'user1@yahoo.com';
+
