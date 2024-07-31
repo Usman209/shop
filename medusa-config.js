@@ -64,6 +64,10 @@ const plugins = [
   {
     resolve: `@lambdacurry/medusa-plugin-product-reviews`,
   },
+  {
+    resolve: `medusa-starter-order`,
+  },
+
 ];
 
 const modules = {

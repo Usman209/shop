@@ -43,6 +43,7 @@
     "medusa-payment-manual": "latest",
     "medusa-payment-stripe": "latest",
     "medusa-plugin-categories": "^1.0.6",
+    "medusa-starter-order": "0.0.3",
     "prism-react-renderer": "^2.0.4",
     "scrypt-kdf": "^2.0.1",
     "sib-api-v3-sdk": "^8.5.0",
