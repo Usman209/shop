@@ -75,22 +75,22 @@ const ProductWidget = ({
                         ${order.items.map(item => `
                             <div class="item">
                                 <span>${item.title} x${item.quantity}</span>
-                                <span>$${(item.unit_price * item.quantity / 100).toFixed(2)}</span>
+                                <span>${(item.unit_price * item.quantity).toFixed(2)}</span>
                             </div>
                         `).join('')}
                     </div>
                     <div class="totals">
                         <div class="total">
                             <span>Subtotal:</span>
-                            <span>$${(order.subtotal / 100).toFixed(2)}</span>
+                            <span>${(order.subtotal).toFixed(2)}</span>
                         </div>
                         <div class="total">
                             <span>Tax:</span>
-                            <span>$${(order.tax_total / 100).toFixed(2)}</span>
+                            <span>${(order.tax_total).toFixed(2)}</span>
                         </div>
                         <div class="total">
                             <span>Total:</span>
-                            <span>$${(order.total / 100).toFixed(2)}</span>
+                            <span>${(order.total).toFixed(2)}</span>
                         </div>
                     </div>
                     <div class="footer">
