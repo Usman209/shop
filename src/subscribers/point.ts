@@ -137,10 +137,10 @@ async function calculateAndAwardPoints(manager: EntityManager, customerId: strin
     // Calculate the new points to award
     const newPoints = totalPointsPossible - totalPointsAwarded;
 
-        const isDisabled = totalPointsPossible < 400;
+        // const isDisabled = totalPointsPossible < 400;
 
 
-        console.log('totalPointsPossible :',totalPointsPossible, 'totalPointsAwarded ',totalPointsAwarded, 'newPoints=========',newPoints);
+      console.log('totalPointsPossible :',totalPointsPossible, 'totalPointsAwarded ',totalPointsAwarded, 'newPoints=========',newPoints);
         
 
 
@@ -165,14 +165,14 @@ async function calculateAndAwardPoints(manager: EntityManager, customerId: strin
         throw error;
       }
 
-      if(isDisabled){
+      // if(isDisabled){
 
-        await manager.query(`
-          UPDATE gift_card
-          SET is_disabled = true
-          WHERE metadata->>'email' = $1
-        `, [email]);
-      }
+      //   await manager.query(`
+      //     UPDATE gift_card
+      //     SET is_disabled = true
+      //     WHERE metadata->>'email' = $1
+      //   `, [email]);
+      // }
 
       return { pointsAwarded: newPoints };
     } else {
