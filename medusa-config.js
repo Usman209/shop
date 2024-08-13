@@ -61,6 +61,21 @@ const plugins = [
     },
     
   },
+
+  {
+    resolve: `medusa-plugin-wordpress`,
+    options: {
+      sync_options: {
+        attempts: 5,
+        backoff: {
+          type: 'exponential',
+          delay: 2000
+        }
+      }
+    },
+  },
+
+
   {
     resolve: `@lambdacurry/medusa-plugin-product-reviews`,
   },

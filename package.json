@@ -43,6 +43,7 @@
     "medusa-payment-manual": "latest",
     "medusa-payment-stripe": "latest",
     "medusa-plugin-categories": "^1.0.6",
+    "medusa-plugin-wordpress": "^0.6.0",
     "medusa-starter-order": "0.0.3",
     "prism-react-renderer": "^2.0.4",
     "scrypt-kdf": "^2.0.1",
